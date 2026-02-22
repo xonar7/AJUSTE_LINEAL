@@ -1,0 +1,32 @@
+Actúa como un desarrollador experto en Python y ciencias de datos. Necesito que crees un proyecto completo de línea de comandos para realizar un "Ajuste Lineal (Regresión Lineal)" usando mínimos cuadrados (`Y = A + BX`).
+
+El proyecto debe constar de un script principal ([ajuste_lineal.py](cci:7://file:///d:/ANTIGRAVITY/AJUSTE_LINEAL/ajuste_lineal.py:0:0-0:0)), un archivo [.gitignore](cci:7://file:///d:/ANTIGRAVITY/AJUSTE_LINEAL/.gitignore:0:0-0:0) estándar para Python, y un [README.md](cci:7://file:///d:/ANTIGRAVITY/AJUSTE_LINEAL/README.md:0:0-0:0) muy educativo sobre cómo ingresar los datos. 
+
+Tu código debe cumplir ESTRICTAMENTE con las siguientes reglas de negocio, cálculos y formato:
+
+### 1. Requisitos de Cálculo y Librerías
+- Usa `scipy.stats.linregress` para calcular la pendiente ($B$), la intersección ($A$), el coeficiente de correlación ($r$) y los errores estándar de ambos estimadores (`stderr` y `intercept_stderr`).
+- Usa `numpy` para el manejo numérico interno si es necesario.
+- Usa `matplotlib` para la graficación. Configura explícitamente el backend `Qt5Agg` (`matplotlib.use('Qt5Agg')`) para que el gráfico se abra en una ventana emergente interactiva al final, y usa también `plt.savefig("grafico_ajuste.png")` para guardar siempre una copia local.
+
+### 2. Lógica de Interfaz de Consola y Carga de Datos
+- La consola debe solicitar los datos de la variable independiente ($X$) uno por uno. El usuario terminará enviando la cadena vacía (ENTER).
+- Inmediatamente después, debe solicitar la variable dependiente ($Y$). El código debe obligar a que el usuario ingrese exactamente la misma cantidad de datos de $Y$ que de $X$ (autocompletando la entrada cuando alcance el límite de $X$).
+- Tras ingresar ambos arreglos, muestra una tabla en la consola con un índice (1, 2, 3...) y los valores de $X$ e $Y$.
+- Pregunta al usuario si los datos están correctos (`s/n`). Si responde `n`, pregúntale por el índice que desea corregir, permítele reescribir la $X$ y/o la $Y$ de ese par, y vuelve a mostrar la tabla hasta que confirme con `s`.
+
+### 3. Reglas Estrictas de Cifras Significativas y Redondeo (CRÍTICO)
+- Define un "error" (la incertidumbre del cálculo de $A$ o $B$).
+- Todos los redondeos intermedios y finales deben usar "Redondeo Bancario" (`ROUND_HALF_EVEN`) implementado obligatoriamente a través del módulo integrado `decimal.Decimal` de Python.
+- **Regla si Error < 10:** Convierte el error a 1 cifra significativa aplicando redondeo bancario. Luego, redondea el valor nominal para que termine exactamente en la misma posición decimal que el error. Muestra en formato: `Valor ± Error`.
+- **Regla si Error >= 10 (Notación Ingeniería Obligatoria):** Si la magnitud real del error es mayor o igual a 10, DEBES expresar el resultado en formato de notación científica restringida donde el exponente resultante sea obligatoriamente un múltiplo de 3 (Ej: 10^3, 10^6). Normaliza el valor y el error dividiéndolos por 10^exponente. Toma el "error normalizado", redondéalo a 1 cifra significativa, luego redondea el "valor normalizado" a la misma cantidad de decimales. Muestra en formato: [(Valor_Norm ± Error_Norm) × 10^exponente](cci:1://file:///d:/ANTIGRAVITY/AJUSTE_LINEAL/ajuste_lineal.py:246:0-285:54).
+
+### 4. Presentación de Resultados en Consola
+La salida final después de ejecutar los datos debe mostrar:
+1. Valores SIN REDONDEAR (con 10 decimales) de $A$, $error_A$, $B$, $error_B$.
+2. Valores REDONDEADOS (siguiendo estrictamente las reglas del punto 3) para $A$ y $B$.
+3. El coeficiente de correlación $r$ (con 6 decimales).
+4. La ecuación final en formato: `Y = (formato_A) + (formato_B)X`.
+
+### 5. Documentación
+Crea el contenido de un [README.md](cci:7://file:///d:/ANTIGRAVITY/AJUSTE_LINEAL/README.md:0:0-0:0) que explique educativa y claramente cómo ejecutar el script, qué dependencias instalar (`pip install numpy scipy matplotlib PyQt5`) y, sobre todo, muestra ejemplos claros de las notaciones numéricas que admite la entrada de Python (ej. enteros, decimales `.5`, y notación científica `1.5e-3`).
